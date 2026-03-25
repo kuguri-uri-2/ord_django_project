@@ -1,0 +1,75 @@
+{% extends 'primal/base.html' %}
+{% block title %}cards{% endblock %}
+
+{% block content %}
+
+  <div class="py-8 px-6">
+
+    <div class="flex flex-col lg:flex-row gap-8">
+
+      <!-- Боковая панель: поиск + категории + сброс -->
+      <aside class="lg:w-1/4 min-w-[280px]">
+
+        <form method="get" action="{% url 'card:cards' %}" class="space-y-6">
+          <input 
+            name="query" 
+            class="w-full py-4 px-6 border rounded-3xl bg-orange-100" 
+            type="text" 
+            value="{{ query }}" 
+            placeholder="how on norwegian I say..."
+          >
+
+          <button 
+            type="submit"
+            class="w-full py-4 px-8 text-lg bg-orange-400 hover:bg-orange-500 text-white rounded-3xl font-semibold">
+            find word card
+          </button>
+        </form>
+
+        <hr class="my-8 border-gray-300">
+
+        <div class="space-y-4">
+          <p class="text-xl font-semibold">types</p>
+
+          <ul class="space-y-1">
+            {% for type in categories %}
+              <li class="{% if type.id == type_id %}bg-gray-200{% endif %} rounded-xl">
+                <a href="{% url 'card:cards' %}?query={{ query }}&type={{ type.id }}" 
+                   class="block py-2 px-4">
+                  {{ type.name }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+
+          <div class="pt-4">
+            <a href="{% url 'card:cards' %}" 
+               class="inline-block py-4 px-8 text-lg bg-orange-400 hover:bg-orange-500 text-white rounded-3xl font-semibold">
+              reboot
+            </a>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- Основная область: карточки -->
+      <main class="flex-1">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {% for card in cards %}
+            <article>
+              <a href="{% url 'card:detail' card.id %}" class="block group">
+                <div class="overflow-hidden rounded-3xl bg-orange-100 p-6 transition group-hover:shadow-md">
+                  <h3 class="text-2xl">{{ card.name }}</h3>
+                  <p class="mt-1 text-gray-700">translation: {{ card.translation }}</p>
+                </div>
+              </a>
+            </article>
+          {% endfor %}
+        </div>
+      </main>
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'primal/base.html' %}
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+
+  <main class="mt-6 px-6">
+
+    <!-- Блок новых карточек -->
+    <section class="mb-12 py-12 pl-12 pr-12 bg-orange-100 rounded-3xl">
+
+      <header class="mb-12 text-center">
+        <h2 class="text-2xl">some new cards</h2>
+      </header>
+
+      <div class="grid grid-cols-3 gap-3">
+        {% for card in cards %}
+          <article>
+            <a href="{% url 'card:detail' card.id %}" class="block">
+              <div class="p-6 bg-white rounded-3xl">
+                <h3 class="text-2xl">{{ card.name }}</h3>
+                <p class="text-gray-500">translation: {{ card.translation }}</p>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+
+    </section>
+
+    <!-- Блок категорий / типов -->
+    <section class="py-12 pl-12 pr-12 bg-orange-100 rounded-3xl">
+
+      <header class="mb-12 text-center">
+        <h2 class="text-2xl">types</h2>
+      </header>
+
+      <div class="grid grid-cols-3 gap-3">
+        {% for type in categories %}
+          <article>
+            <a href="#" class="block">
+              <div class="p-6 bg-white rounded-3xl">
+                <h3 class="text-2xl">{{ type.name }}</h3>
+                <p class="text-gray-500">{{ type.cards.count }} cards</p>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+
+    </section>
+
+  </main>
+
+{% endblock %}

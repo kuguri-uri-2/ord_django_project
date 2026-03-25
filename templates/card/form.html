@@ -1,0 +1,46 @@
+{% extends 'primal/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+  <main class="my-8 mx-auto w-1/2 max-w-2xl">
+
+    <h1 class="mb-8 text-3xl text-center">{{ title }}</h1>
+
+    <form method="post" action="." enctype="multipart/form-data" class="space-y-6">
+      {% csrf_token %}
+
+      <fieldset class="space-y-5">
+        {% for field in form %}
+          <div class="field-group">
+            <label for="{{ field.id_for_label }}" class="block mb-2 font-medium">
+              {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.help_text %}
+              <p class="mt-1 text-sm text-gray-500">{{ field.help_text }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </fieldset>
+
+      {% if form.errors %}
+        <div class="mt-6 p-6 bg-red-100 rounded-xl">
+          {{ form.non_field_errors }}
+          {% for field in form %}
+            {{ field.errors }}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="mt-8 text-center">
+        <button type="submit"
+                class="py-4 px-8 text-lg bg-orange-400 hover:bg-orange-500 rounded-3xl text-white font-semibold">
+          yep
+        </button>
+      </div>
+    </form>
+
+  </main>
+
+{% endblock %}
