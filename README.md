@@ -51,7 +51,7 @@
 - **Django**  
 - **SQLite** (база данных по умолчанию в Django)  
 - **HTML (Django Templates)**  
-- **CSS**  
+- **Tailwind CSS**  
 
 ---
 
